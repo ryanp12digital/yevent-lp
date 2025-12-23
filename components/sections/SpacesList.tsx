@@ -67,7 +67,7 @@ const SpacesList: React.FC<SpacesListProps> = ({ onViewDetails }) => {
         <div className="mb-20 border-[3px] border-blue-100/50 rounded-[4rem] p-10 md:p-16 relative overflow-hidden bg-gradient-to-br from-blue-50/20 to-transparent">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-12 relative z-10">
             <div className="space-y-6 max-w-3xl">
-              <h2 className="text-5xl md:text-7xl font-black text-slate-900 tracking-tighter leading-[0.9]">
+              <h2 className="text-4xl md:text-6xl font-semibold text-slate-900 tracking-tight leading-[1.1]">
                 Nossa Curadoria <br /> de Espaços
               </h2>
               <p className="text-slate-500 text-lg md:text-xl font-medium leading-relaxed max-w-2xl">
@@ -75,7 +75,7 @@ const SpacesList: React.FC<SpacesListProps> = ({ onViewDetails }) => {
               </p>
             </div>
             <div className="flex-shrink-0 relative">
-               <div className="w-20 h-20 md:w-28 md:h-28 bg-blue-600 text-white rounded-[2rem] md:rounded-[3rem] flex items-center justify-center font-black text-4xl shadow-[0_20px_50px_rgba(37,99,235,0.3)] rotate-6 transition-transform hover:rotate-0 duration-700 cursor-default">
+               <div className="w-20 h-20 md:w-28 md:h-28 bg-blue-600 text-white rounded-[2rem] md:rounded-[3rem] flex items-center justify-center font-bold text-4xl shadow-[0_20px_50px_rgba(37,99,235,0.3)] rotate-6 transition-transform hover:rotate-0 duration-700 cursor-default">
                 Y
               </div>
               <div className="absolute -bottom-4 -right-4 w-12 h-1 bg-blue-200/50 rounded-full blur-sm"></div>
@@ -96,19 +96,19 @@ const SpacesList: React.FC<SpacesListProps> = ({ onViewDetails }) => {
               <div className="relative">
                 <SpaceCardImage src={space.image} alt={space.name} />
                 <div className="absolute top-8 left-8 z-10">
-                  <span className="px-5 py-2.5 bg-white/95 backdrop-blur-md text-[10px] font-black text-blue-600 uppercase rounded-full shadow-xl tracking-[0.2em] border border-white/20">
+                  <span className="px-5 py-2.5 bg-white/95 backdrop-blur-md text-[10px] font-bold text-blue-600 uppercase rounded-full shadow-xl tracking-[0.2em] border border-white/20">
                     {space.city}
                   </span>
                 </div>
               </div>
               
               <div className="p-10 flex flex-col flex-1">
-                <div className="flex items-center gap-2 text-blue-600 mb-5 font-black text-[11px] uppercase tracking-[0.25em] opacity-80">
+                <div className="flex items-center gap-2 text-blue-600 mb-5 font-bold text-[11px] uppercase tracking-[0.25em] opacity-80">
                   <MapPin className="w-4 h-4 shrink-0" />
                   <span>{space.city}</span>
                 </div>
                 
-                <h3 className="text-2xl md:text-3xl font-black text-slate-900 mb-8 group-hover:text-blue-600 transition-colors leading-tight min-h-[4.5rem] line-clamp-2">
+                <h3 className="text-2xl md:text-3xl font-semibold text-slate-900 mb-8 group-hover:text-blue-600 transition-colors leading-tight min-h-[4.5rem] line-clamp-2">
                   {space.name}
                 </h3>
 
@@ -118,8 +118,8 @@ const SpacesList: React.FC<SpacesListProps> = ({ onViewDetails }) => {
                       <Users className="w-6 h-6" />
                     </div>
                     <div className="min-w-0">
-                      <span className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-0.5">Capacidade</span>
-                      <span className="text-sm font-black text-slate-900 truncate block">{space.capacity} pessoas</span>
+                      <span className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-0.5">Capacidade</span>
+                      <span className="text-sm font-semibold text-slate-900 truncate block">{space.capacity} pessoas</span>
                     </div>
                   </div>
 
@@ -128,16 +128,16 @@ const SpacesList: React.FC<SpacesListProps> = ({ onViewDetails }) => {
                       <Maximize2 className="w-6 h-6" />
                     </div>
                     <div className="min-w-0">
-                      <span className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-0.5">Área</span>
-                      <span className="text-sm font-black text-slate-900 truncate block">{space.area}</span>
+                      <span className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-0.5">Área</span>
+                      <span className="text-sm font-semibold text-slate-900 truncate block">{space.area}</span>
                     </div>
                   </div>
                 </div>
 
                 <div className="mt-auto flex items-center justify-between gap-6">
                   <div className="min-w-0">
-                    <span className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Investimento</span>
-                    <div className="text-slate-900 font-black text-3xl md:text-4xl tracking-tighter">
+                    <span className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2">Investimento</span>
+                    <div className="text-slate-900 font-semibold text-3xl md:text-4xl tracking-tighter">
                       {space.price ? formatCurrency(space.price) : 'Consulte'}
                     </div>
                   </div>
@@ -157,7 +157,7 @@ const SpacesList: React.FC<SpacesListProps> = ({ onViewDetails }) => {
           <div className="mt-24 flex justify-center">
             <button 
               onClick={() => setDisplayCount(prev => prev + 3)}
-              className="group flex items-center gap-4 px-12 py-5 font-black uppercase text-[11px] tracking-[0.25em] bg-white border-[3px] border-slate-950 text-slate-950 rounded-full hover:bg-slate-950 hover:text-white transition-all duration-500 shadow-[0_15px_30px_rgba(0,0,0,0.05)]"
+              className="group flex items-center gap-4 px-12 py-5 font-bold uppercase text-[11px] tracking-[0.25em] bg-white border-[3px] border-slate-950 text-slate-950 rounded-full hover:bg-slate-950 hover:text-white transition-all duration-500 shadow-[0_15px_30px_rgba(0,0,0,0.05)]"
             >
               <Plus className="w-5 h-5 transition-transform group-hover:rotate-90" />
               Ver mais espaços

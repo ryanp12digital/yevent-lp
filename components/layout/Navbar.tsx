@@ -29,7 +29,7 @@ const Navbar: React.FC<NavbarProps> = ({ onHomeClick }) => {
         onClick={onHomeClick}
       >
         <span className={cn(
-          "text-2xl font-black tracking-tighter transition-colors",
+          "text-2xl font-bold tracking-tighter transition-colors",
           isScrolled ? "text-blue-600" : "text-white"
         )}>
           Yevent

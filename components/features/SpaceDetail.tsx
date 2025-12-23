@@ -67,12 +67,12 @@ const SpaceDetail: React.FC<SpaceDetailProps> = ({ space, onBack }) => {
             <div>
               <div className="flex items-center gap-2 mb-4">
                 {space.tags.map(tag => (
-                  <span key={tag} className="px-3 py-1 bg-blue-50 text-blue-600 text-[10px] font-black uppercase rounded-full">
+                  <span key={tag} className="px-3 py-1 bg-blue-50 text-blue-600 text-[10px] font-bold uppercase rounded-full">
                     {tag}
                   </span>
                 ))}
               </div>
-              <h1 className="text-4xl md:text-5xl font-black text-slate-900 mb-6">{space.name}</h1>
+              <h1 className="text-3xl md:text-5xl font-semibold text-slate-900 mb-6">{space.name}</h1>
               
               <div className="flex flex-wrap gap-8 mb-10 pb-10 border-b border-slate-100">
                 <div className="flex items-center gap-3">
@@ -81,7 +81,7 @@ const SpaceDetail: React.FC<SpaceDetailProps> = ({ space, onBack }) => {
                   </div>
                   <div>
                     <span className="block text-xs font-bold text-slate-400 uppercase">Capacidade</span>
-                    <span className="font-extrabold text-slate-900">{space.capacity} Pessoas</span>
+                    <span className="font-semibold text-slate-900">{space.capacity} Pessoas</span>
                   </div>
                 </div>
                 <div className="flex items-center gap-3">
@@ -90,7 +90,7 @@ const SpaceDetail: React.FC<SpaceDetailProps> = ({ space, onBack }) => {
                   </div>
                   <div>
                     <span className="block text-xs font-bold text-slate-400 uppercase">Tamanho</span>
-                    <span className="font-extrabold text-slate-900">{space.area}</span>
+                    <span className="font-semibold text-slate-900">{space.area}</span>
                   </div>
                 </div>
                 <div className="flex items-center gap-3">
@@ -99,17 +99,17 @@ const SpaceDetail: React.FC<SpaceDetailProps> = ({ space, onBack }) => {
                   </div>
                   <div>
                     <span className="block text-xs font-bold text-slate-400 uppercase">Localização</span>
-                    <span className="font-extrabold text-slate-900">{space.city}, Brasil</span>
+                    <span className="font-semibold text-slate-900">{space.city}, Brasil</span>
                   </div>
                 </div>
               </div>
 
               <div className="prose prose-slate max-w-none">
-                <h3 className="text-2xl font-bold mb-4">Sobre o espaço</h3>
-                <p className="text-slate-600 leading-relaxed mb-6">
+                <h3 className="text-2xl font-semibold mb-4 text-slate-900">Sobre o espaço</h3>
+                <p className="text-slate-600 leading-relaxed mb-6 font-medium">
                   Este espaço foi meticulosamente planejado para atender às demandas de eventos corporativos modernos. Localizado estrategicamente no centro financeiro de {space.city}, oferece a infraestrutura completa para treinamentos, workshops e reuniões de alto nível.
                 </p>
-                <p className="text-slate-600 leading-relaxed">
+                <p className="text-slate-600 leading-relaxed font-medium">
                   O ambiente conta com iluminação natural, mobiliário ergonômico e isolamento acústico de primeira linha, garantindo que seu evento ocorra sem interrupções e com o máximo de conforto para todos os participantes.
                 </p>
               </div>
@@ -117,12 +117,12 @@ const SpaceDetail: React.FC<SpaceDetailProps> = ({ space, onBack }) => {
 
             {/* Amenities Grid */}
             <div className="bg-slate-50 rounded-3xl p-8">
-              <h3 className="text-xl font-bold mb-6">O que este local oferece</h3>
+              <h3 className="text-xl font-semibold mb-6 text-slate-900">O que este local oferece</h3>
               <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
                 {amenities.map((item, idx) => (
                   <div key={idx} className="flex items-center gap-3">
                     <item.icon className="w-5 h-5 text-blue-600" />
-                    <span className="text-sm font-medium text-slate-700">{item.label}</span>
+                    <span className="text-sm font-semibold text-slate-700">{item.label}</span>
                   </div>
                 ))}
               </div>
@@ -135,7 +135,7 @@ const SpaceDetail: React.FC<SpaceDetailProps> = ({ space, onBack }) => {
               <div className="flex items-end justify-between">
                 <div>
                   <span className="block text-sm font-bold text-slate-400 uppercase mb-1">Valor do turno</span>
-                  <div className="text-3xl font-black text-slate-900">
+                  <div className="text-3xl font-semibold text-slate-900 tracking-tighter">
                     {space.price ? formatCurrency(space.price) : 'Sob Consulta'}
                   </div>
                 </div>
@@ -145,15 +145,15 @@ const SpaceDetail: React.FC<SpaceDetailProps> = ({ space, onBack }) => {
               </div>
 
               <div className="space-y-4 pt-4 border-t border-slate-100">
-                <div className="flex items-center gap-3 text-sm text-slate-600">
+                <div className="flex items-center gap-3 text-sm text-slate-600 font-medium">
                   <Check className="w-5 h-5 text-blue-600" />
                   <span>Reserva garantida e imediata</span>
                 </div>
-                <div className="flex items-center gap-3 text-sm text-slate-600">
+                <div className="flex items-center gap-3 text-sm text-slate-600 font-medium">
                   <Check className="w-5 h-5 text-blue-600" />
                   <span>Suporte técnico on-site</span>
                 </div>
-                <div className="flex items-center gap-3 text-sm text-slate-600">
+                <div className="flex items-center gap-3 text-sm text-slate-600 font-medium">
                   <Check className="w-5 h-5 text-blue-600" />
                   <span>Cancelamento grátis até 48h antes</span>
                 </div>
@@ -161,14 +161,14 @@ const SpaceDetail: React.FC<SpaceDetailProps> = ({ space, onBack }) => {
 
               <Button 
                 size="lg" 
-                className="w-full py-5 text-lg shadow-xl shadow-blue-200"
+                className="w-full py-5 text-base font-bold uppercase tracking-widest shadow-xl shadow-blue-200 rounded-2xl"
                 onClick={() => setIsBookingFormOpen(true)}
               >
                 Solicitar Reserva
               </Button>
 
-              <p className="text-center text-xs text-slate-400 font-medium">
-                Você não será cobrado ainda. Nossa equipe enviará o orçamento detalhado.
+              <p className="text-center text-[11px] text-slate-400 font-bold uppercase tracking-widest">
+                Você não será cobrado ainda.
               </p>
             </div>
           </div>

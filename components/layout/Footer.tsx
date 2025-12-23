@@ -10,19 +10,19 @@ const Footer: React.FC = () => {
       <div className="max-w-7xl mx-auto px-6 -mb-16 relative z-20">
         <div className="bg-blue-600 rounded-[4rem] p-12 md:p-20 shadow-[0_40px_80px_-20px_rgba(37,99,235,0.4)] flex flex-col lg:flex-row items-center justify-between gap-12 border-[8px] border-blue-500/30">
           <div className="text-white text-center lg:text-left space-y-2">
-            <h3 className="text-3xl md:text-5xl font-black tracking-tighter leading-none uppercase">INSCREVA-SE PARA RECEBER</h3>
-            <p className="text-blue-100 text-lg md:text-2xl font-medium uppercase tracking-[0.1em] opacity-90">NOTIFICAÇÃO DE NOVOS ESPAÇOS</p>
+            <h3 className="text-2xl md:text-3xl font-semibold tracking-tight leading-none uppercase">INSCREVA-SE PARA RECEBER</h3>
+            <p className="text-blue-100 text-base md:text-base font-medium tracking-[0.1em] opacity-90">NOTIFICAÇÃO DE NOVOS ESPAÇOS</p>
           </div>
           <form className="w-full lg:w-auto flex flex-col md:flex-row gap-4 items-stretch md:items-center">
             <div className="relative flex-1 md:w-96">
               <input 
                 type="email" 
                 placeholder="Seu melhor Email" 
-                className="w-full px-8 py-6 rounded-[2rem] bg-slate-950/20 backdrop-blur-md border border-white/20 outline-none text-white placeholder:text-blue-100 font-bold transition-all focus:bg-slate-950/40 focus:border-white/40"
+                className="w-full px-8 py-6 rounded-[2rem] bg-slate-950/20 backdrop-blur-md border border-white/20 outline-none text-white placeholder:text-blue-100 font-semibold transition-all focus:bg-slate-950/40 focus:border-white/40"
               />
             </div>
             <button 
-              className="px-14 py-6 font-black uppercase tracking-[0.2em] text-xs bg-slate-950 text-white hover:bg-black transition-all rounded-[2rem] shadow-2xl active:scale-95 whitespace-nowrap"
+              className="px-14 py-6 font-bold uppercase tracking-[0.2em] text-[11px] bg-slate-950 text-white hover:bg-black transition-all rounded-[2rem] shadow-2xl active:scale-95 whitespace-nowrap"
             >
               Inscreva-se agora
             </button>
@@ -35,15 +35,15 @@ const Footer: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16 lg:gap-12">
             {/* Brand */}
             <div className="space-y-10">
-              <span className="text-4xl font-black text-blue-600 tracking-tighter">Yevent</span>
+              <span className="text-3xl font-bold text-blue-600 tracking-tighter">Yevent</span>
               <div className="space-y-6">
                 <div>
-                  <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-4">Escritório Central</p>
+                  <p className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em] mb-4">Escritório Central</p>
                   <div className="flex gap-4 text-sm text-slate-600">
                     <div className="w-12 h-12 rounded-2xl bg-white border border-slate-100 flex items-center justify-center shrink-0 shadow-sm">
                       <MapPin className="w-5 h-5 text-blue-600" />
                     </div>
-                    <p className="font-bold leading-relaxed">Recife - Rua Manuel de Brito, 311 - Pina - Recife-PE.</p>
+                    <p className="font-medium leading-relaxed">Recife - Rua Manuel de Brito, 311 - Pina - Recife-PE.</p>
                   </div>
                 </div>
                 <div className="space-y-4">
@@ -51,13 +51,13 @@ const Footer: React.FC = () => {
                     <div className="w-12 h-12 rounded-2xl bg-white border border-slate-100 flex items-center justify-center shrink-0 shadow-sm">
                       <Phone className="w-5 h-5 text-blue-600" />
                     </div>
-                    <p className="font-black pt-3">+55 (81) 9 9187-0929</p>
+                    <p className="font-semibold pt-3">+55 (81) 9 9187-0929</p>
                   </div>
                   <div className="flex gap-4 text-sm text-slate-600">
                     <div className="w-12 h-12 rounded-2xl bg-white border border-slate-100 flex items-center justify-center shrink-0 shadow-sm">
                       <Mail className="w-5 h-5 text-blue-600" />
                     </div>
-                    <p className="font-black pt-3">suporte@yevent.com.br</p>
+                    <p className="font-semibold pt-3">suporte@yevent.com.br</p>
                   </div>
                 </div>
               </div>
@@ -65,8 +65,8 @@ const Footer: React.FC = () => {
 
             {/* Links 1 */}
             <div className="space-y-10">
-              <h4 className="text-xs font-black text-slate-900 uppercase tracking-[0.2em]">Conheça a Yevent</h4>
-              <ul className="space-y-5 text-sm text-slate-500 font-bold uppercase tracking-widest text-[11px]">
+              <h4 className="text-[10px] font-bold text-slate-900 uppercase tracking-[0.2em]">Conheça a Yevent</h4>
+              <ul className="space-y-5 text-sm text-slate-500 font-semibold uppercase tracking-widest text-[11px]">
                 <li><a href="#" className="hover:text-blue-600 transition-colors">Quem somos</a></li>
                 <li><a href="#" className="hover:text-blue-600 transition-colors">Como funciona</a></li>
                 <li><a href="#" className="hover:text-blue-600 transition-colors">Blog Corporativo</a></li>
@@ -76,8 +76,8 @@ const Footer: React.FC = () => {
 
             {/* Links 2 */}
             <div className="space-y-10">
-              <h4 className="text-xs font-black text-slate-900 uppercase tracking-[0.2em]">Atendimento</h4>
-              <ul className="space-y-5 text-sm text-slate-500 font-bold uppercase tracking-widest text-[11px]">
+              <h4 className="text-[10px] font-bold text-slate-900 uppercase tracking-[0.2em]">Atendimento</h4>
+              <ul className="space-y-5 text-sm text-slate-500 font-semibold uppercase tracking-widest text-[11px]">
                 <li><a href="#" className="hover:text-blue-600 transition-colors">Centro de ajuda</a></li>
                 <li><a href="#" className="hover:text-blue-600 transition-colors">Seja um parceiro</a></li>
                 <li><a href="#" className="hover:text-blue-600 transition-colors">Políticas de cancelamento</a></li>
@@ -88,7 +88,7 @@ const Footer: React.FC = () => {
             {/* Legal & Social */}
             <div className="space-y-12">
               <div className="space-y-8">
-                <h4 className="text-xs font-black text-slate-900 uppercase tracking-[0.2em]">Siga-nos</h4>
+                <h4 className="text-[10px] font-bold text-slate-900 uppercase tracking-[0.2em]">Siga-nos</h4>
                 <div className="flex gap-4">
                   <a href="#" className="w-14 h-14 rounded-[1.5rem] bg-white border border-slate-200 flex items-center justify-center text-slate-600 hover:bg-blue-600 hover:text-white transition-all shadow-sm hover:-translate-y-1">
                     <Linkedin className="w-6 h-6" />
@@ -99,8 +99,8 @@ const Footer: React.FC = () => {
                 </div>
               </div>
               <div className="pt-6 border-t border-slate-200/50">
-                <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-3">Segurança</p>
-                <div className="flex items-center gap-2 text-green-600 font-black text-[11px] uppercase tracking-widest">
+                <p className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em] mb-3">Segurança</p>
+                <div className="flex items-center gap-2 text-green-600 font-bold text-[11px] uppercase tracking-widest">
                   <span className="w-2 h-2 rounded-full bg-green-500"></span>
                   Navegação Segura
                 </div>
@@ -108,7 +108,7 @@ const Footer: React.FC = () => {
             </div>
           </div>
 
-          <div className="mt-24 pt-10 border-t border-slate-200/60 flex flex-col md:flex-row justify-between items-center gap-6 text-[10px] text-slate-400 font-black uppercase tracking-[0.15em]">
+          <div className="mt-24 pt-10 border-t border-slate-200/60 flex flex-col md:flex-row justify-between items-center gap-6 text-[10px] text-slate-400 font-bold uppercase tracking-[0.15em]">
             <p>Yevent © Todos os direitos reservados 2024</p>
             <div className="flex gap-8">
               <span className="text-slate-900">Desenvolvido por Tech Lead Studio</span>

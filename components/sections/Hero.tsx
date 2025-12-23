@@ -20,10 +20,10 @@ const Hero: React.FC = () => {
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-6 text-center text-white">
-        <h1 className="text-5xl md:text-7xl lg:text-8xl font-black mb-8 tracking-tighter leading-[0.9] drop-shadow-2xl">
+        <h1 className="text-4xl md:text-6xl lg:text-7xl font-semibold mb-8 tracking-tight leading-[1.1] drop-shadow-2xl">
           O palco ideal para <br /> seu próximo <br /> sucesso corporativo.
         </h1>
-        <p className="text-lg md:text-2xl text-white/80 max-w-2xl mx-auto mb-16 font-medium leading-relaxed drop-shadow-lg">
+        <p className="text-lg md:text-xl text-white/80 max-w-2xl mx-auto mb-16 font-medium leading-relaxed drop-shadow-lg">
           De reuniões executivas a conferências globais. Encontre espaços que inspiram inovação e colaboração.
         </p>
 
@@ -35,8 +35,8 @@ const Hero: React.FC = () => {
             <div className="flex-1 flex items-center px-6 py-4 md:py-2 border-b md:border-b-0 md:border-r border-slate-100 group transition-colors hover:bg-slate-50 rounded-2xl md:rounded-none">
               <MapPin className="text-blue-600 mr-4 w-6 h-6 shrink-0 opacity-70 group-hover:opacity-100 transition-opacity" />
               <div className="text-left w-full">
-                <span className="block text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-0.5">Cidade</span>
-                <select className="w-full bg-transparent outline-none font-black appearance-none cursor-pointer text-slate-900 text-sm md:text-base pr-4">
+                <span className="block text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em] mb-0.5">Cidade</span>
+                <select className="w-full bg-transparent outline-none font-semibold appearance-none cursor-pointer text-slate-900 text-sm md:text-base pr-4">
                   <option>Selecione a cidade...</option>
                   <option>Fortaleza, CE</option>
                   <option>Salvador, BA</option>
@@ -49,8 +49,8 @@ const Hero: React.FC = () => {
             <div className="flex-1 flex items-center px-6 py-4 md:py-2 border-b md:border-b-0 md:border-r border-slate-100 group transition-colors hover:bg-slate-50 rounded-2xl md:rounded-none">
               <Building2 className="text-blue-600 mr-4 w-6 h-6 shrink-0 opacity-70 group-hover:opacity-100 transition-opacity" />
               <div className="text-left w-full">
-                <span className="block text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-0.5">Tipo de sala</span>
-                <select className="w-full bg-transparent outline-none font-black appearance-none cursor-pointer text-slate-900 text-sm md:text-base pr-4">
+                <span className="block text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em] mb-0.5">Tipo de sala</span>
+                <select className="w-full bg-transparent outline-none font-semibold appearance-none cursor-pointer text-slate-900 text-sm md:text-base pr-4">
                   <option>Qual o formato?</option>
                   <option>Auditório</option>
                   <option>Sala de Aula</option>
@@ -65,8 +65,8 @@ const Hero: React.FC = () => {
               <Users className="text-blue-600 mr-4 w-6 h-6 shrink-0 opacity-70 group-hover:opacity-100 transition-opacity" />
               <div className="text-left w-full">
                 <div className="flex justify-between items-center mb-0.5">
-                  <span className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Capacidade</span>
-                  <span className="text-xs font-black text-blue-600 bg-blue-50 px-2 py-0.5 rounded-md min-w-[32px] text-center">
+                  <span className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em]">Capacidade</span>
+                  <span className="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded-md min-w-[32px] text-center">
                     {capacity >= 200 ? '200+' : capacity}
                   </span>
                 </div>
@@ -86,7 +86,7 @@ const Hero: React.FC = () => {
           <div className="p-2 md:p-0 md:pl-2">
             <Button size="lg" className="w-full md:w-auto md:rounded-full flex items-center justify-center py-4 md:py-4 md:px-14 shadow-xl shadow-blue-200/50 hover:scale-[1.02] active:scale-95 transition-all bg-blue-600 border-none">
               <Search className="w-5 h-5 mr-3" />
-              <span className="uppercase tracking-widest text-xs font-black">Buscar Espaço</span>
+              <span className="uppercase tracking-widest text-[11px] font-bold">Buscar Espaço</span>
             </Button>
           </div>
         </div>
