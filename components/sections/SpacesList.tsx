@@ -1,7 +1,7 @@
 
 'use client'
 
-import React, { useRef, useState, useEffect } from 'react'
+import React, { useRef, useState } from 'react'
 import { useGSAP } from '@gsap/react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
@@ -30,10 +30,8 @@ const SpacesList: React.FC<SpacesListProps> = ({ limit, showTitle = true, onView
   const filteredSpaces = SPACES.filter(space => {
     if (!filters) return true;
 
-    // Lógica da capacidade: "todas as salas que tiverem do numero escolhidos para baixo"
-    // Ex: Escolhi 50, mostra 50, 40, 25...
+    // Lógica da capacidade
     const matchCapacity = space.capacity <= filters.capacity;
-
     const matchCity = !filters.city || filters.city === '' || space.city === filters.city;
     
     // Verifica se o tipo está no nome ou nas tags
@@ -44,8 +42,6 @@ const SpacesList: React.FC<SpacesListProps> = ({ limit, showTitle = true, onView
     return matchCapacity && matchCity && matchType;
   });
 
-  // Se houver filtros ativos (busca realizada), mostramos todos os resultados filtrados e ignoramos o limite inicial
-  // A menos que o usuário explicitamente queira ver mais, mas para busca é melhor mostrar o que encontrou.
   const isFiltering = filters && (filters.city !== '' || filters.type !== '' || filters.capacity < 200);
   const finalSpaces = isFiltering ? filteredSpaces : filteredSpaces.slice(0, limit ? limit : displayCount);
 
@@ -70,19 +66,78 @@ const SpacesList: React.FC<SpacesListProps> = ({ limit, showTitle = true, onView
     }
   }, { scope: containerRef, dependencies: [finalSpaces] })
 
-  const handleCardClick = (e: React.MouseEvent, space: Space) => {
-    if (onViewDetails) {
-      e.preventDefault()
-      onViewDetails(space)
-    }
-  }
-
   const handleSeeAllClick = (e: React.MouseEvent) => {
     if (onSeeAll) {
       e.preventDefault()
       onSeeAll()
     }
   }
+
+  // Componente interno para renderizar o conteúdo do card (evita duplicação)
+  const CardContent = ({ space }: { space: Space }) => (
+    <>
+      <div className="relative aspect-[16/11] overflow-hidden bg-slate-50">
+        <img 
+          id={`space-img-${space.id}`}
+          src={space.image} 
+          alt={space.name}
+          className="w-full h-full object-cover transition-all duration-1000 group-hover:scale-110"
+        />
+        <div className="absolute top-6 left-6 z-10">
+          <span className="px-4 py-2 bg-white/95 backdrop-blur-md text-[9px] font-bold text-blue-600 uppercase rounded-full shadow-lg tracking-[0.2em]">
+            {space.city}
+          </span>
+        </div>
+      </div>
+      
+      <div className="p-8 flex flex-col flex-1">
+        <div className="flex items-center gap-2 text-blue-600 mb-4 font-bold text-[9px] uppercase tracking-[0.25em] opacity-80">
+          <MapPin className="w-3.5 h-3.5" />
+          <span>Premium Location</span>
+        </div>
+        
+        <h3 className="text-xl md:text-2xl font-semibold text-slate-900 mb-6 group-hover:text-blue-600 transition-colors leading-tight line-clamp-2">
+          {space.name}
+        </h3>
+
+        <div className="grid grid-cols-2 gap-4 mb-8 py-6 border-y border-slate-50">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-slate-50 flex items-center justify-center shrink-0 group-hover:bg-blue-600 group-hover:text-white transition-all duration-500">
+              <Users className="w-5 h-5" />
+            </div>
+            <div>
+              <span className="block text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-0.5">Capacidade</span>
+              <span className="text-xs font-semibold text-slate-900">{space.capacity} pessoas</span>
+            </div>
+          </div>
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-slate-50 flex items-center justify-center shrink-0 group-hover:bg-blue-600 group-hover:text-white transition-all duration-500">
+              <Maximize2 className="w-5 h-5" />
+            </div>
+            <div>
+              <span className="block text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-0.5">Área</span>
+              <span className="text-xs font-semibold text-slate-900">{space.area}</span>
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-auto flex items-center justify-between gap-4">
+          <div>
+            <span className="block text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-1">Investimento</span>
+            <div className="text-slate-900 font-semibold text-xl md:text-2xl tracking-tighter">
+              {space.price ? formatCurrency(space.price) : 'Consulte'}
+            </div>
+          </div>
+          <div 
+            id={`space-btn-view-${space.id}`}
+            className="w-12 h-12 rounded-xl bg-slate-950 text-white flex items-center justify-center transition-all group-hover:bg-blue-600 group-hover:-rotate-45 shadow-lg group-hover:shadow-blue-200"
+          >
+            <ArrowRight className="w-5 h-5" />
+          </div>
+        </div>
+      </div>
+    </>
+  );
 
   return (
     <section id="spaces-list-section" className="relative bg-white overflow-hidden" ref={containerRef}>
@@ -108,79 +163,36 @@ const SpacesList: React.FC<SpacesListProps> = ({ limit, showTitle = true, onView
           </div>
         )}
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
           {finalSpaces.map((space) => (
-            <div 
-              key={space.id}
-              id={`space-card-${space.id}`}
-              onClick={(e) => handleCardClick(e, space)}
-              className="space-card group bg-white rounded-[2.5rem] overflow-hidden border border-slate-100 hover:border-blue-400 hover:shadow-[0_40px_80px_-20px_rgba(37,99,235,0.12)] transition-all duration-700 flex flex-col cursor-pointer"
-            >
-              <div className="relative aspect-[16/11] overflow-hidden bg-slate-50">
-                <img 
-                  id={`space-img-${space.id}`}
-                  src={space.image} 
-                  alt={space.name}
-                  className="w-full h-full object-cover transition-all duration-1000 group-hover:scale-110"
-                />
-                <div className="absolute top-6 left-6 z-10">
-                  <span className="px-4 py-2 bg-white/95 backdrop-blur-md text-[9px] font-bold text-blue-600 uppercase rounded-full shadow-lg tracking-[0.2em]">
-                    {space.city}
-                  </span>
+            <React.Fragment key={space.id}>
+              {onViewDetails ? (
+                // Modo SPA / App.tsx
+                <div 
+                  id={`space-card-${space.id}`}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    onViewDetails(space);
+                  }}
+                  className="space-card group bg-white rounded-[2.5rem] overflow-hidden border border-slate-100 hover:border-blue-400 hover:shadow-[0_40px_80px_-20px_rgba(37,99,235,0.12)] transition-all duration-700 flex flex-col cursor-pointer"
+                >
+                  <CardContent space={space} />
                 </div>
-              </div>
-              
-              <div className="p-8 flex flex-col flex-1">
-                <div className="flex items-center gap-2 text-blue-600 mb-4 font-bold text-[9px] uppercase tracking-[0.25em] opacity-80">
-                  <MapPin className="w-3.5 h-3.5" />
-                  <span>Premium Location</span>
-                </div>
-                
-                <h3 className="text-xl md:text-2xl font-semibold text-slate-900 mb-6 group-hover:text-blue-600 transition-colors leading-tight line-clamp-2">
-                  {space.name}
-                </h3>
-
-                <div className="grid grid-cols-2 gap-4 mb-8 py-6 border-y border-slate-50">
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-xl bg-slate-50 flex items-center justify-center shrink-0 group-hover:bg-blue-600 group-hover:text-white transition-all duration-500">
-                      <Users className="w-5 h-5" />
-                    </div>
-                    <div>
-                      <span className="block text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-0.5">Capacidade</span>
-                      <span className="text-xs font-semibold text-slate-900">{space.capacity} pessoas</span>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-xl bg-slate-50 flex items-center justify-center shrink-0 group-hover:bg-blue-600 group-hover:text-white transition-all duration-500">
-                      <Maximize2 className="w-5 h-5" />
-                    </div>
-                    <div>
-                      <span className="block text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-0.5">Área</span>
-                      <span className="text-xs font-semibold text-slate-900">{space.area}</span>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="mt-auto flex items-center justify-between gap-4">
-                  <div>
-                    <span className="block text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-1">Investimento</span>
-                    <div className="text-slate-900 font-semibold text-xl md:text-2xl tracking-tighter">
-                      {space.price ? formatCurrency(space.price) : 'Consulte'}
-                    </div>
-                  </div>
-                  <div 
-                    id={`space-btn-view-${space.id}`}
-                    className="w-12 h-12 rounded-xl bg-slate-950 text-white flex items-center justify-center transition-all group-hover:bg-blue-600 group-hover:-rotate-45 shadow-lg group-hover:shadow-blue-200"
-                  >
-                    <ArrowRight className="w-5 h-5" />
-                  </div>
-                </div>
-              </div>
-            </div>
+              ) : (
+                // Modo Next.js / App Router (Links REAIS)
+                <Link
+                  href={`/spaces/${space.id}`}
+                  id={`space-card-${space.id}`}
+                  className="space-card group bg-white rounded-[2.5rem] overflow-hidden border border-slate-100 hover:border-blue-400 hover:shadow-[0_40px_80px_-20px_rgba(37,99,235,0.12)] transition-all duration-700 flex flex-col cursor-pointer"
+                >
+                  <CardContent space={space} />
+                </Link>
+              )}
+            </React.Fragment>
           ))}
         </div>
 
-        {/* Mostra botão "Explorar todos" apenas se não estiver filtrando e houver limite */}
+        {/* Botões de ação (Ver todos / Carregar mais) */}
         {!isFiltering && limit && (
           <div className="mt-20 flex justify-center">
             {seeAllHref ? (
@@ -206,7 +218,6 @@ const SpacesList: React.FC<SpacesListProps> = ({ limit, showTitle = true, onView
           </div>
         )}
 
-        {/* Botão "Carregar mais" apenas se não houver limite e não estiver filtrando tudo */}
         {!limit && !isFiltering && displayCount < SPACES.length && (
           <div className="mt-20 flex justify-center">
             <button 
