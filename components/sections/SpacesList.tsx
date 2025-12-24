@@ -9,6 +9,7 @@ import { SPACES, type Space } from '../../data/spaces'
 import { Users, Maximize2, ArrowRight, MapPin, Plus, LayoutGrid, XCircle } from 'lucide-react'
 import { formatCurrency } from '../../lib/utils'
 import { FilterCriteria } from '../../lib/types'
+import Link from 'next/link'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -17,10 +18,11 @@ interface SpacesListProps {
   showTitle?: boolean
   onViewDetails?: (space: Space) => void
   onSeeAll?: () => void
+  seeAllHref?: string
   filters?: FilterCriteria
 }
 
-const SpacesList: React.FC<SpacesListProps> = ({ limit, showTitle = true, onViewDetails, onSeeAll, filters }) => {
+const SpacesList: React.FC<SpacesListProps> = ({ limit, showTitle = true, onViewDetails, onSeeAll, seeAllHref, filters }) => {
   const containerRef = useRef<HTMLDivElement>(null)
   const [displayCount, setDisplayCount] = useState(limit || 6)
 
@@ -83,7 +85,7 @@ const SpacesList: React.FC<SpacesListProps> = ({ limit, showTitle = true, onView
   }
 
   return (
-    <section id="spaces-list-section" className="relative py-12 px-6 bg-white overflow-hidden" ref={containerRef}>
+    <section id="spaces-list-section" className="relative bg-white overflow-hidden" ref={containerRef}>
       <div className="relative max-w-[1440px] mx-auto z-10">
         {showTitle && (
           <div className="mb-20 text-center space-y-4">
@@ -106,7 +108,7 @@ const SpacesList: React.FC<SpacesListProps> = ({ limit, showTitle = true, onView
           </div>
         )}
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {finalSpaces.map((space) => (
             <div 
               key={space.id}
@@ -181,14 +183,26 @@ const SpacesList: React.FC<SpacesListProps> = ({ limit, showTitle = true, onView
         {/* Mostra botão "Explorar todos" apenas se não estiver filtrando e houver limite */}
         {!isFiltering && limit && (
           <div className="mt-20 flex justify-center">
-            <button 
-              id="spaces-btn-see-all"
-              onClick={handleSeeAllClick}
-              className="group flex items-center gap-4 px-10 py-4 font-bold uppercase text-[10px] tracking-[0.25em] bg-white border-2 border-slate-900 text-slate-900 rounded-full hover:bg-slate-900 hover:text-white transition-all duration-500 shadow-xl shadow-slate-200"
-            >
-              <LayoutGrid className="w-4 h-4 transition-transform group-hover:rotate-12" />
-              Explorar todos os espaços
-            </button>
+            {seeAllHref ? (
+              <Link 
+                href={seeAllHref}
+                id="spaces-link-see-all"
+                className="group flex items-center gap-4 px-10 py-4 font-bold uppercase text-[10px] tracking-[0.25em] bg-white border-2 border-slate-900 text-slate-900 rounded-full hover:bg-slate-900 hover:text-white transition-all duration-500 shadow-xl shadow-slate-200"
+              >
+                <LayoutGrid className="w-4 h-4 transition-transform group-hover:rotate-12" />
+                Explorar todos os espaços
+              </Link>
+            ) : (
+              <button 
+                type="button"
+                id="spaces-btn-see-all"
+                onClick={handleSeeAllClick}
+                className="group flex items-center gap-4 px-10 py-4 font-bold uppercase text-[10px] tracking-[0.25em] bg-white border-2 border-slate-900 text-slate-900 rounded-full hover:bg-slate-900 hover:text-white transition-all duration-500 shadow-xl shadow-slate-200"
+              >
+                <LayoutGrid className="w-4 h-4 transition-transform group-hover:rotate-12" />
+                Explorar todos os espaços
+              </button>
+            )}
           </div>
         )}
 
@@ -196,6 +210,7 @@ const SpacesList: React.FC<SpacesListProps> = ({ limit, showTitle = true, onView
         {!limit && !isFiltering && displayCount < SPACES.length && (
           <div className="mt-20 flex justify-center">
             <button 
+              type="button"
               id="spaces-btn-load-more"
               onClick={() => setDisplayCount(prev => prev + 3)}
               className="group flex items-center gap-4 px-10 py-4 font-bold uppercase text-[10px] tracking-[0.25em] bg-slate-900 text-white rounded-full hover:bg-blue-600 transition-all duration-500 shadow-2xl"

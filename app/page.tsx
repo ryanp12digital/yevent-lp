@@ -46,7 +46,7 @@ export default function Home() {
             limit={3} 
             showTitle={false}
             filters={filters}
-            // Em ambiente Next.js, a navegação para "ver todos" é tratada internamente pelo componente List ou Navbar
+            seeAllHref="/spaces"
           />
         </div>
       </div>
