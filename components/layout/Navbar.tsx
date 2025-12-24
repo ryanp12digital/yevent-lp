@@ -1,9 +1,11 @@
+
 'use client'
 
 import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
+import { useSafeRouter } from '../../hooks/useSafeRouter'
 import { Home, LayoutGrid, Mail, Menu, X, ArrowRight } from 'lucide-react'
-import { type ViewState } from '../../App'
+import { type ViewState } from '../../lib/types'
 import { cn } from '../../lib/utils'
 import Button from '../ui/Button'
 
@@ -15,6 +17,7 @@ interface NavbarProps {
 const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate }) => {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const router = useSafeRouter()
 
   // Detect scroll to adjust navbar appearance
   useEffect(() => {
@@ -31,17 +34,24 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate }) => {
     { name: 'Contato', id: 'contact', icon: Mail, path: '/contact' }
   ]
 
-  const handleNavigate = (view: ViewState) => {
+  const handleNavigate = (item: { id: string, path: string }) => {
     setIsMobileMenuOpen(false)
+    
+    // Priority 1: Manual Handler (for SPA mode)
     if (onNavigate) {
-      onNavigate(view)
-    } else if (typeof window !== 'undefined') {
-      const pathMap: Record<string, string> = {
-        'home': '/',
-        'spaces': '/spaces',
-        'contact': '/contact'
-      }
-      window.location.href = pathMap[view] || '/'
+      onNavigate(item.id as ViewState)
+      return
+    }
+
+    // Priority 2: Next.js Router (for Production/Vercel)
+    if (router) {
+      router.push(item.path)
+      return
+    }
+
+    // Fallback
+    if (typeof window !== 'undefined') {
+      window.location.href = item.path
     }
   }
 
@@ -49,13 +59,8 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate }) => {
 
   return (
     <>
-      {/* 
-         NAVBAR CONTAINER
-         - Fixed position
-         - Centered horizontally
-         - Width adjusts to content (w-auto) to avoid invisible blocking blocks
-      */}
       <nav 
+        id="navbar-container"
         className={cn(
           "fixed top-6 left-1/2 -translate-x-1/2 z-[60] transition-all duration-500 ease-in-out w-[90%] max-w-4xl",
           isScrolled ? "top-4" : "top-6"
@@ -66,13 +71,15 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate }) => {
           isMobileMenuOpen ? "rounded-3xl flex-col items-stretch gap-4 p-4 bg-white" : ""
         )}>
           
-          {/* Header Row (Logo + Mobile Toggle) */}
           <div className="flex items-center justify-between pl-4 pr-2 w-full md:w-auto">
             <Link 
               href="/"
+              id="navbar-logo-link"
               onClick={(e) => {
-                e.preventDefault()
-                handleNavigate('home')
+                if (onNavigate) {
+                  e.preventDefault()
+                  handleNavigate({ id: 'home', path: '/' })
+                }
               }}
               className="flex items-center gap-2 group mr-8"
             >
@@ -85,6 +92,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate }) => {
             </Link>
 
             <button 
+              id="navbar-mobile-toggle"
               className="md:hidden p-2 text-slate-600 bg-slate-100 rounded-full"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             >
@@ -92,14 +100,14 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate }) => {
             </button>
           </div>
 
-          {/* Desktop Navigation */}
           <div className="hidden md:flex items-center bg-slate-100/50 rounded-full p-1 border border-slate-200/50">
             {navItems.map((item) => {
               const isActive = activeId === item.id || (activeId === 'detail' && item.id === 'spaces')
               return (
                 <button
                   key={item.id}
-                  onClick={() => handleNavigate(item.id as ViewState)}
+                  id={`navbar-link-${item.id}`}
+                  onClick={() => handleNavigate(item)}
                   className={cn(
                     "relative px-5 py-2 rounded-full text-xs font-bold uppercase tracking-widest transition-all duration-300 flex items-center gap-2",
                     isActive 
@@ -113,26 +121,26 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate }) => {
             })}
           </div>
 
-          {/* CTA Button */}
           <div className="hidden md:block pl-2">
             <Button 
+              id="navbar-btn-reserve"
               size="sm"
-              onClick={() => handleNavigate('contact')}
+              onClick={() => handleNavigate({ id: 'contact', path: '/contact' })}
               className="rounded-full px-6 py-2.5 text-xs font-bold uppercase tracking-widest bg-slate-900 hover:bg-blue-600 shadow-lg hover:shadow-blue-200 transition-all flex items-center gap-2"
             >
               Reservar <ArrowRight size={14} />
             </Button>
           </div>
 
-          {/* Mobile Menu Content */}
           {isMobileMenuOpen && (
-            <div className="md:hidden flex flex-col gap-2 pt-2 border-t border-slate-100 animate-in slide-in-from-top-2">
+            <div id="navbar-mobile-menu" className="md:hidden flex flex-col gap-2 pt-2 border-t border-slate-100 animate-in slide-in-from-top-2">
               {navItems.map((item) => {
                  const isActive = activeId === item.id
                  return (
                   <button
                     key={item.id}
-                    onClick={() => handleNavigate(item.id as ViewState)}
+                    id={`navbar-mobile-link-${item.id}`}
+                    onClick={() => handleNavigate(item)}
                     className={cn(
                       "w-full text-left px-4 py-3 rounded-xl text-sm font-semibold transition-colors flex items-center gap-3",
                       isActive 
@@ -146,7 +154,8 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate }) => {
                  )
               })}
               <Button 
-                onClick={() => handleNavigate('contact')}
+                id="navbar-mobile-btn-reserve"
+                onClick={() => handleNavigate({ id: 'contact', path: '/contact' })}
                 className="w-full mt-2 rounded-xl py-3 justify-center"
               >
                 Solicitar Reserva

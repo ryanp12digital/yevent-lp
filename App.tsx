@@ -8,14 +8,7 @@ import ContactPage from './components/features/ContactPage';
 import Footer from './components/layout/Footer';
 import { Toaster } from 'react-hot-toast';
 import { type Space } from './data/spaces';
-
-export type ViewState = 'home' | 'spaces' | 'contact' | 'detail';
-
-export interface FilterCriteria {
-  city: string;
-  type: string;
-  capacity: number;
-}
+import { ViewState, FilterCriteria } from './lib/types';
 
 const App: React.FC = () => {
   const [currentView, setCurrentView] = useState<ViewState>('home');
@@ -51,7 +44,7 @@ const App: React.FC = () => {
     // Se estiver na home, rola para a lista. Se não, poderia mudar a view.
     // Como a lista está na Home, apenas rolamos.
     setTimeout(() => {
-      const spacesSection = document.getElementById('spaces');
+      const spacesSection = document.getElementById('spaces-list-section');
       if (spacesSection) {
         spacesSection.scrollIntoView({ behavior: 'smooth' });
       }

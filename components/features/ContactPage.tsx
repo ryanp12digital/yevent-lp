@@ -82,10 +82,10 @@ const ContactPage: React.FC = () => {
             <div className="pt-8 border-t border-slate-100">
               <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-6">Siga nossas novidades</p>
               <div className="flex gap-4">
-                <a href="#" className="w-12 h-12 rounded-2xl bg-white border border-slate-200 flex items-center justify-center text-slate-600 hover:bg-blue-600 hover:text-white transition-all shadow-sm">
+                <a id="contact-link-linkedin" href="#" className="w-12 h-12 rounded-2xl bg-white border border-slate-200 flex items-center justify-center text-slate-600 hover:bg-blue-600 hover:text-white transition-all shadow-sm">
                   <Linkedin className="w-5 h-5" />
                 </a>
-                <a href="#" className="w-12 h-12 rounded-2xl bg-white border border-slate-200 flex items-center justify-center text-slate-600 hover:bg-blue-600 hover:text-white transition-all shadow-sm">
+                <a id="contact-link-instagram" href="#" className="w-12 h-12 rounded-2xl bg-white border border-slate-200 flex items-center justify-center text-slate-600 hover:bg-blue-600 hover:text-white transition-all shadow-sm">
                   <Instagram className="w-5 h-5" />
                 </a>
               </div>
@@ -102,12 +102,13 @@ const ContactPage: React.FC = () => {
                   </div>
                   <h3 className="text-2xl font-bold text-slate-900 mb-2">Mensagem Recebida!</h3>
                   <p className="text-slate-500 mb-8 font-medium">Obrigado por entrar em contato. Um de nossos consultores responderá você em até 24 horas úteis.</p>
-                  <Button onClick={() => setIsSubmitted(false)} variant="outline" className="rounded-2xl px-10">Enviar outra mensagem</Button>
+                  <Button id="contact-btn-success-reset" onClick={() => setIsSubmitted(false)} variant="outline" className="rounded-2xl px-10">Enviar outra mensagem</Button>
                 </div>
               ) : (
-                <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+                <form id="contact-form" onSubmit={handleSubmit(onSubmit)} className="space-y-6">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <Input 
+                      id="contact-input-name"
                       label="Nome" 
                       placeholder="Como podemos te chamar?" 
                       {...register('name')} 
@@ -115,6 +116,7 @@ const ContactPage: React.FC = () => {
                       className="rounded-2xl px-6 py-4"
                     />
                     <Input 
+                      id="contact-input-email"
                       label="E-mail" 
                       placeholder="seu@email.com.br" 
                       {...register('email')} 
@@ -123,6 +125,7 @@ const ContactPage: React.FC = () => {
                     />
                   </div>
                   <Input 
+                    id="contact-input-phone"
                     label="Telefone" 
                     placeholder="(00) 00000-0000" 
                     {...register('phone')} 
@@ -132,6 +135,7 @@ const ContactPage: React.FC = () => {
                   <div className="space-y-2">
                     <label className="text-sm font-semibold text-slate-700">Mensagem</label>
                     <textarea 
+                      id="contact-textarea-message"
                       className={cn(
                         "w-full px-6 py-4 bg-slate-50 border rounded-2xl outline-none transition-all h-32 font-medium text-slate-800 focus:ring-2 focus:ring-blue-600/20",
                         errors.message ? "border-red-500" : "border-slate-200 focus:border-blue-600"
@@ -142,6 +146,7 @@ const ContactPage: React.FC = () => {
                     {errors.message && <p className="text-xs text-red-500">{errors.message.message}</p>}
                   </div>
                   <Button 
+                    id="contact-btn-submit"
                     type="submit" 
                     className="w-full py-5 rounded-2xl flex items-center justify-center gap-3 shadow-xl shadow-blue-200"
                     disabled={isSubmitting}

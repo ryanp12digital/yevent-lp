@@ -1,6 +1,8 @@
+
 'use client'
 
 import React, { useState } from 'react';
+import { useSafeRouter } from '../../hooks/useSafeRouter';
 import { type Space } from '../../data/spaces';
 import { 
   Users, Maximize2, ArrowLeft, Wifi, Tv, Coffee, 
@@ -17,6 +19,7 @@ interface SpaceDetailProps {
 
 const SpaceDetail: React.FC<SpaceDetailProps> = ({ space, onBack }) => {
   const [isBookingFormOpen, setIsBookingFormOpen] = useState(false);
+  const router = useSafeRouter();
 
   const amenities = [
     { icon: Wifi, label: 'Wi-Fi de Alta Velocidade' },
@@ -30,6 +33,8 @@ const SpaceDetail: React.FC<SpaceDetailProps> = ({ space, onBack }) => {
   const handleBack = () => {
     if (onBack) {
       onBack();
+    } else if (router) {
+      router.push('/spaces');
     } else if (typeof window !== 'undefined') {
       window.location.href = '/spaces';
     }
@@ -39,6 +44,7 @@ const SpaceDetail: React.FC<SpaceDetailProps> = ({ space, onBack }) => {
     <div className="pt-24 pb-20 bg-white">
       <div className="max-w-7xl mx-auto px-6">
         <button 
+          id="detail-btn-back"
           onClick={handleBack}
           className="flex items-center text-slate-500 hover:text-blue-600 font-bold text-sm mb-8 transition-colors group"
         >
@@ -77,7 +83,7 @@ const SpaceDetail: React.FC<SpaceDetailProps> = ({ space, onBack }) => {
                   </span>
                 ))}
               </div>
-              <h1 className="text-3xl md:text-5xl font-semibold text-slate-900 mb-6">{space.name}</h1>
+              <h1 id="detail-title" className="text-3xl md:text-5xl font-semibold text-slate-900 mb-6">{space.name}</h1>
               
               <div className="flex flex-wrap gap-8 mb-10 pb-10 border-b border-slate-100">
                 <div className="flex items-center gap-3">
@@ -163,6 +169,7 @@ const SpaceDetail: React.FC<SpaceDetailProps> = ({ space, onBack }) => {
               </div>
 
               <Button 
+                id="detail-btn-request-booking"
                 size="lg" 
                 className="w-full py-5 text-base font-bold uppercase tracking-widest shadow-xl shadow-blue-200 rounded-2xl"
                 onClick={() => setIsBookingFormOpen(true)}

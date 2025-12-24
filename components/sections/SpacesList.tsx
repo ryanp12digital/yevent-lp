@@ -8,7 +8,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { SPACES, type Space } from '../../data/spaces'
 import { Users, Maximize2, ArrowRight, MapPin, Plus, LayoutGrid, XCircle } from 'lucide-react'
 import { formatCurrency } from '../../lib/utils'
-import { FilterCriteria } from '../../App'
+import { FilterCriteria } from '../../lib/types'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -83,7 +83,7 @@ const SpacesList: React.FC<SpacesListProps> = ({ limit, showTitle = true, onView
   }
 
   return (
-    <section id="spaces" className="relative py-12 px-6 bg-white overflow-hidden" ref={containerRef}>
+    <section id="spaces-list-section" className="relative py-12 px-6 bg-white overflow-hidden" ref={containerRef}>
       <div className="relative max-w-[1440px] mx-auto z-10">
         {showTitle && (
           <div className="mb-20 text-center space-y-4">
@@ -97,7 +97,7 @@ const SpacesList: React.FC<SpacesListProps> = ({ limit, showTitle = true, onView
 
         {/* Feedback de busca vazia */}
         {finalSpaces.length === 0 && (
-          <div className="text-center py-20 bg-slate-50 rounded-3xl border border-slate-100">
+          <div id="spaces-empty-state" className="text-center py-20 bg-slate-50 rounded-3xl border border-slate-100">
             <div className="w-16 h-16 bg-slate-200 rounded-full flex items-center justify-center mx-auto mb-4">
               <XCircle className="w-8 h-8 text-slate-400" />
             </div>
@@ -110,11 +110,13 @@ const SpacesList: React.FC<SpacesListProps> = ({ limit, showTitle = true, onView
           {finalSpaces.map((space) => (
             <div 
               key={space.id}
+              id={`space-card-${space.id}`}
               onClick={(e) => handleCardClick(e, space)}
               className="space-card group bg-white rounded-[2.5rem] overflow-hidden border border-slate-100 hover:border-blue-400 hover:shadow-[0_40px_80px_-20px_rgba(37,99,235,0.12)] transition-all duration-700 flex flex-col cursor-pointer"
             >
               <div className="relative aspect-[16/11] overflow-hidden bg-slate-50">
                 <img 
+                  id={`space-img-${space.id}`}
                   src={space.image} 
                   alt={space.name}
                   className="w-full h-full object-cover transition-all duration-1000 group-hover:scale-110"
@@ -164,7 +166,10 @@ const SpacesList: React.FC<SpacesListProps> = ({ limit, showTitle = true, onView
                       {space.price ? formatCurrency(space.price) : 'Consulte'}
                     </div>
                   </div>
-                  <div className="w-12 h-12 rounded-xl bg-slate-950 text-white flex items-center justify-center transition-all group-hover:bg-blue-600 group-hover:-rotate-45 shadow-lg group-hover:shadow-blue-200">
+                  <div 
+                    id={`space-btn-view-${space.id}`}
+                    className="w-12 h-12 rounded-xl bg-slate-950 text-white flex items-center justify-center transition-all group-hover:bg-blue-600 group-hover:-rotate-45 shadow-lg group-hover:shadow-blue-200"
+                  >
                     <ArrowRight className="w-5 h-5" />
                   </div>
                 </div>
@@ -177,6 +182,7 @@ const SpacesList: React.FC<SpacesListProps> = ({ limit, showTitle = true, onView
         {!isFiltering && limit && (
           <div className="mt-20 flex justify-center">
             <button 
+              id="spaces-btn-see-all"
               onClick={handleSeeAllClick}
               className="group flex items-center gap-4 px-10 py-4 font-bold uppercase text-[10px] tracking-[0.25em] bg-white border-2 border-slate-900 text-slate-900 rounded-full hover:bg-slate-900 hover:text-white transition-all duration-500 shadow-xl shadow-slate-200"
             >
@@ -190,6 +196,7 @@ const SpacesList: React.FC<SpacesListProps> = ({ limit, showTitle = true, onView
         {!limit && !isFiltering && displayCount < SPACES.length && (
           <div className="mt-20 flex justify-center">
             <button 
+              id="spaces-btn-load-more"
               onClick={() => setDisplayCount(prev => prev + 3)}
               className="group flex items-center gap-4 px-10 py-4 font-bold uppercase text-[10px] tracking-[0.25em] bg-slate-900 text-white rounded-full hover:bg-blue-600 transition-all duration-500 shadow-2xl"
             >

@@ -88,6 +88,7 @@ const BookingForm: React.FC<BookingFormProps> = ({ spaceId, spaceName, onClose }
 
   return (
     <div 
+      id="booking-modal-overlay"
       className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
       onClick={(e) => {
         // Close on backdrop click if not loading
@@ -99,6 +100,7 @@ const BookingForm: React.FC<BookingFormProps> = ({ spaceId, spaceName, onClose }
       <div className="relative w-full max-w-md bg-white rounded-2xl shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-300">
         {status !== 'loading' && (
           <button 
+            id="booking-btn-close"
             onClick={onClose}
             className="absolute top-4 right-4 text-slate-400 hover:text-slate-600 transition-colors z-10"
             aria-label="Fechar"
@@ -118,7 +120,7 @@ const BookingForm: React.FC<BookingFormProps> = ({ spaceId, spaceName, onClose }
                 Recebemos sua solicitação para o espaço <strong>{spaceName}</strong>. 
                 Nossa equipe entrará em contato em breve via e-mail ou WhatsApp.
               </p>
-              <Button onClick={onClose} className="w-full">
+              <Button id="booking-btn-success-close" onClick={onClose} className="w-full">
                 Fechar
               </Button>
             </div>
@@ -131,7 +133,7 @@ const BookingForm: React.FC<BookingFormProps> = ({ spaceId, spaceName, onClose }
               <p className="text-slate-500 mb-8">
                 {errorMessage || 'Não foi possível processar seu pedido agora.'}
               </p>
-              <Button onClick={() => setStatus('idle')} variant="outline" className="w-full">
+              <Button id="booking-btn-error-retry" onClick={() => setStatus('idle')} variant="outline" className="w-full">
                 Tentar novamente
               </Button>
             </div>
@@ -142,8 +144,9 @@ const BookingForm: React.FC<BookingFormProps> = ({ spaceId, spaceName, onClose }
                 {spaceName ? `Interesse em: ${spaceName}` : 'Preencha os campos abaixo para receber uma proposta personalizada.'}
               </p>
 
-              <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+              <form id="booking-form" onSubmit={handleSubmit(onSubmit)} className="space-y-4">
                 <Input
+                  id="booking-input-name"
                   label="Nome completo"
                   placeholder="Seu nome aqui"
                   disabled={status === 'loading'}
@@ -153,6 +156,7 @@ const BookingForm: React.FC<BookingFormProps> = ({ spaceId, spaceName, onClose }
                 />
                 
                 <Input
+                  id="booking-input-email"
                   label="E-mail corporativo"
                   type="email"
                   placeholder="exemplo@empresa.com"
@@ -162,6 +166,7 @@ const BookingForm: React.FC<BookingFormProps> = ({ spaceId, spaceName, onClose }
                 />
 
                 <Input
+                  id="booking-input-phone"
                   label="Telefone / WhatsApp"
                   placeholder="(00) 00000-0000"
                   disabled={status === 'loading'}
@@ -172,6 +177,7 @@ const BookingForm: React.FC<BookingFormProps> = ({ spaceId, spaceName, onClose }
                 <div className="space-y-1">
                   <label className="text-sm font-medium text-slate-700">Detalhes do evento</label>
                   <textarea
+                    id="booking-textarea-message"
                     disabled={status === 'loading'}
                     className="w-full px-4 py-2 bg-white border border-slate-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all h-24 disabled:opacity-50 disabled:bg-slate-50"
                     placeholder="Data pretendida, número de pessoas, etc."
@@ -181,6 +187,7 @@ const BookingForm: React.FC<BookingFormProps> = ({ spaceId, spaceName, onClose }
                 </div>
 
                 <Button 
+                  id="booking-btn-submit"
                   type="submit" 
                   className="w-full flex items-center justify-center gap-2" 
                   disabled={status === 'loading'}

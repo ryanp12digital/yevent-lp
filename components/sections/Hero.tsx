@@ -4,7 +4,7 @@
 import React, { useState } from 'react'
 import { Search, MapPin, Users, Building2 } from 'lucide-react'
 import Button from '../ui/Button'
-import { FilterCriteria } from '../../App'
+import { FilterCriteria } from '../../lib/types'
 
 interface HeroProps {
   onSearch?: (filters: FilterCriteria) => void
@@ -27,7 +27,7 @@ const Hero: React.FC<HeroProps> = ({ onSearch }) => {
   }
 
   return (
-    <section className="relative h-screen min-h-[800px] flex items-center justify-center pt-24 overflow-hidden">
+    <section id="hero-section" className="relative h-screen min-h-[800px] flex items-center justify-center pt-24 overflow-hidden">
       {/* Background Image fix - using standard img to ensure ESM compatibility */}
       <div className="absolute inset-0 z-0">
         <img 
@@ -63,6 +63,7 @@ const Hero: React.FC<HeroProps> = ({ onSearch }) => {
               <div className="text-left w-full">
                 <span className="block text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em] mb-0.5">Localização</span>
                 <select 
+                  id="hero-select-city"
                   className="w-full bg-transparent outline-none font-semibold appearance-none cursor-pointer text-slate-900 text-sm md:text-base pr-4"
                   value={city}
                   onChange={(e) => setCity(e.target.value)}
@@ -81,6 +82,7 @@ const Hero: React.FC<HeroProps> = ({ onSearch }) => {
               <div className="text-left w-full">
                 <span className="block text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em] mb-0.5">Tipo de Espaço</span>
                 <select 
+                  id="hero-select-type"
                   className="w-full bg-transparent outline-none font-semibold appearance-none cursor-pointer text-slate-900 text-sm md:text-base pr-4"
                   value={type}
                   onChange={(e) => setType(e.target.value)}
@@ -104,6 +106,7 @@ const Hero: React.FC<HeroProps> = ({ onSearch }) => {
                   </span>
                 </div>
                 <input 
+                  id="hero-range-capacity"
                   type="range" 
                   className="w-full accent-blue-600 cursor-pointer h-1.5 bg-slate-100 rounded-lg appearance-none mt-2" 
                   min="5" 
@@ -118,6 +121,7 @@ const Hero: React.FC<HeroProps> = ({ onSearch }) => {
 
           <div className="p-2 md:p-0 md:pl-4">
             <Button 
+              id="hero-btn-search"
               size="lg" 
               onClick={handleSearchClick}
               className="w-full md:w-auto md:rounded-2xl flex items-center justify-center py-5 md:py-5 md:px-10 shadow-2xl shadow-blue-500/20 hover:scale-[1.02] active:scale-95 transition-all bg-blue-600 border-none group"
