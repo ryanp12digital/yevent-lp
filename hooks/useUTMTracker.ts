@@ -1,28 +1,28 @@
+'use client'
 
-import { useEffect, useState } from 'react';
+import { useMemo } from 'react'
 
 export interface UTMParams {
-  utm_source?: string;
-  utm_medium?: string;
-  utm_campaign?: string;
-  utm_term?: string;
-  utm_content?: string;
+  utm_source?: string
+  utm_medium?: string
+  utm_campaign?: string
+  utm_term?: string
+  utm_content?: string
 }
 
 export function useUTMTracker() {
-  const [utms, setUtms] = useState<UTMParams>({});
+  const utms = useMemo(() => {
+    if (typeof window === 'undefined') return {}
 
-  useEffect(() => {
-    const searchParams = new URLSearchParams(window.location.search);
-    const utmObj: UTMParams = {
+    const searchParams = new URLSearchParams(window.location.search)
+    return {
       utm_source: searchParams.get('utm_source') || undefined,
       utm_medium: searchParams.get('utm_medium') || undefined,
       utm_campaign: searchParams.get('utm_campaign') || undefined,
       utm_term: searchParams.get('utm_term') || undefined,
       utm_content: searchParams.get('utm_content') || undefined,
-    };
-    setUtms(utmObj);
-  }, []);
+    }
+  }, [])
 
-  return utms;
+  return utms
 }

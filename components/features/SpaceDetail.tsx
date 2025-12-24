@@ -1,3 +1,4 @@
+'use client'
 
 import React, { useState } from 'react';
 import { type Space } from '../../data/spaces';
@@ -11,7 +12,7 @@ import BookingForm from './BookingForm';
 
 interface SpaceDetailProps {
   space: Space;
-  onBack: () => void;
+  onBack?: () => void;
 }
 
 const SpaceDetail: React.FC<SpaceDetailProps> = ({ space, onBack }) => {
@@ -26,12 +27,19 @@ const SpaceDetail: React.FC<SpaceDetailProps> = ({ space, onBack }) => {
     { icon: Calendar, label: 'Reserva Flexível' },
   ];
 
+  const handleBack = () => {
+    if (onBack) {
+      onBack();
+    } else if (typeof window !== 'undefined') {
+      window.location.href = '/spaces';
+    }
+  };
+
   return (
     <div className="pt-24 pb-20 bg-white">
       <div className="max-w-7xl mx-auto px-6">
-        {/* Navigation Breadcrumb */}
         <button 
-          onClick={onBack}
+          onClick={handleBack}
           className="flex items-center text-slate-500 hover:text-blue-600 font-bold text-sm mb-8 transition-colors group"
         >
           <ArrowLeft className="w-4 h-4 mr-2 transition-transform group-hover:-translate-x-1" />
@@ -39,9 +47,7 @@ const SpaceDetail: React.FC<SpaceDetailProps> = ({ space, onBack }) => {
         </button>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
-          {/* Main Content (Images and Info) */}
           <div className="lg:col-span-8 space-y-10">
-            {/* Gallery Simulation */}
             <div className="space-y-4">
               <div className="aspect-video w-full rounded-3xl overflow-hidden shadow-xl">
                 <img 
@@ -63,7 +69,6 @@ const SpaceDetail: React.FC<SpaceDetailProps> = ({ space, onBack }) => {
               </div>
             </div>
 
-            {/* Space Description */}
             <div>
               <div className="flex items-center gap-2 mb-4">
                 {space.tags.map(tag => (
@@ -115,7 +120,6 @@ const SpaceDetail: React.FC<SpaceDetailProps> = ({ space, onBack }) => {
               </div>
             </div>
 
-            {/* Amenities Grid */}
             <div className="bg-slate-50 rounded-3xl p-8">
               <h3 className="text-xl font-semibold mb-6 text-slate-900">O que este local oferece</h3>
               <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
@@ -129,7 +133,6 @@ const SpaceDetail: React.FC<SpaceDetailProps> = ({ space, onBack }) => {
             </div>
           </div>
 
-          {/* Sidebar (Booking Card) */}
           <div className="lg:col-span-4">
             <div className="sticky top-32 bg-white rounded-3xl border border-slate-200 shadow-2xl p-8 space-y-8">
               <div className="flex items-end justify-between">

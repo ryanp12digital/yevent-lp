@@ -1,30 +1,76 @@
+'use client'
 
 import React from 'react';
 import { Linkedin, Instagram, Phone, Mail, MapPin } from 'lucide-react';
-import Button from '../ui/Button';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { newsletterSchema, type NewsletterFormData } from '../../lib/schemas';
+import { toast } from 'react-hot-toast';
+import { type ViewState } from '../../App';
 
-const Footer: React.FC = () => {
+interface FooterProps {
+  onNavigate?: (view: ViewState) => void;
+}
+
+const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { isSubmitting },
+  } = useForm<NewsletterFormData>({
+    resolver: zodResolver(newsletterSchema),
+  });
+
+  const onNewsletterSubmit = async (data: NewsletterFormData) => {
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    console.log('Newsletter signup:', data);
+    toast.success('Inscrição realizada com sucesso!');
+    reset();
+  };
+
+  const handleNavigate = (view: ViewState) => {
+    if (onNavigate) {
+      onNavigate(view);
+    } else if (typeof window !== 'undefined') {
+      const pathMap: Record<ViewState, string> = {
+        home: '/',
+        spaces: '/spaces',
+        contact: '/contact',
+        detail: '/spaces'
+      };
+      window.location.href = pathMap[view];
+    }
+  };
+
   return (
     <footer className="bg-white pt-24">
-      {/* Newsletter Section - Refined for Design System Consistency */}
+      {/* Newsletter Section */}
       <div className="max-w-7xl mx-auto px-6 -mb-16 relative z-20">
         <div className="bg-blue-600 rounded-[4rem] p-12 md:p-20 shadow-[0_40px_80px_-20px_rgba(37,99,235,0.4)] flex flex-col lg:flex-row items-center justify-between gap-12 border-[8px] border-blue-500/30">
           <div className="text-white text-center lg:text-left space-y-2">
             <h3 className="text-2xl md:text-3xl font-semibold tracking-tight leading-none uppercase">INSCREVA-SE PARA RECEBER</h3>
             <p className="text-blue-100 text-base md:text-base font-medium tracking-[0.1em] opacity-90">NOTIFICAÇÃO DE NOVOS ESPAÇOS</p>
           </div>
-          <form className="w-full lg:w-auto flex flex-col md:flex-row gap-4 items-stretch md:items-center">
+          <form 
+            onSubmit={handleSubmit(onNewsletterSubmit)}
+            className="w-full lg:w-auto flex flex-col md:flex-row gap-4 items-stretch md:items-center"
+          >
             <div className="relative flex-1 md:w-96">
               <input 
                 type="email" 
                 placeholder="Seu melhor Email" 
+                required
+                {...register('email')}
                 className="w-full px-8 py-6 rounded-[2rem] bg-slate-950/20 backdrop-blur-md border border-white/20 outline-none text-white placeholder:text-blue-100 font-semibold transition-all focus:bg-slate-950/40 focus:border-white/40"
               />
             </div>
             <button 
-              className="px-14 py-6 font-bold uppercase tracking-[0.2em] text-[11px] bg-slate-950 text-white hover:bg-black transition-all rounded-[2rem] shadow-2xl active:scale-95 whitespace-nowrap"
+              type="submit"
+              disabled={isSubmitting}
+              className="px-14 py-6 font-bold uppercase tracking-[0.2em] text-[11px] bg-slate-950 text-white hover:bg-black transition-all rounded-[2rem] shadow-2xl active:scale-95 whitespace-nowrap disabled:opacity-50"
             >
-              Inscreva-se agora
+              {isSubmitting ? 'Enviando...' : 'Inscreva-se agora'}
             </button>
           </form>
         </div>
@@ -35,7 +81,7 @@ const Footer: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16 lg:gap-12">
             {/* Brand */}
             <div className="space-y-10">
-              <span className="text-3xl font-bold text-blue-600 tracking-tighter">Yevent</span>
+              <span className="text-3xl font-bold text-blue-600 tracking-tighter cursor-pointer" onClick={() => handleNavigate('home')}>Yevent</span>
               <div className="space-y-6">
                 <div>
                   <p className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em] mb-4">Escritório Central</p>
@@ -67,10 +113,10 @@ const Footer: React.FC = () => {
             <div className="space-y-10">
               <h4 className="text-[10px] font-bold text-slate-900 uppercase tracking-[0.2em]">Conheça a Yevent</h4>
               <ul className="space-y-5 text-sm text-slate-500 font-semibold uppercase tracking-widest text-[11px]">
-                <li><a href="#" className="hover:text-blue-600 transition-colors">Quem somos</a></li>
-                <li><a href="#" className="hover:text-blue-600 transition-colors">Como funciona</a></li>
-                <li><a href="#" className="hover:text-blue-600 transition-colors">Blog Corporativo</a></li>
-                <li><a href="#" className="hover:text-blue-600 transition-colors">Carreiras</a></li>
+                <li><button onClick={() => handleNavigate('home')} className="hover:text-blue-600 transition-colors">Quem somos</button></li>
+                <li><button onClick={() => handleNavigate('home')} className="hover:text-blue-600 transition-colors">Como funciona</button></li>
+                <li><button onClick={() => handleNavigate('home')} className="hover:text-blue-600 transition-colors">Blog Corporativo</button></li>
+                <li><button onClick={() => handleNavigate('home')} className="hover:text-blue-600 transition-colors">Carreiras</button></li>
               </ul>
             </div>
 
@@ -78,10 +124,10 @@ const Footer: React.FC = () => {
             <div className="space-y-10">
               <h4 className="text-[10px] font-bold text-slate-900 uppercase tracking-[0.2em]">Atendimento</h4>
               <ul className="space-y-5 text-sm text-slate-500 font-semibold uppercase tracking-widest text-[11px]">
-                <li><a href="#" className="hover:text-blue-600 transition-colors">Centro de ajuda</a></li>
-                <li><a href="#" className="hover:text-blue-600 transition-colors">Seja um parceiro</a></li>
-                <li><a href="#" className="hover:text-blue-600 transition-colors">Políticas de cancelamento</a></li>
-                <li><a href="#" className="hover:text-blue-600 transition-colors">Ouvidoria</a></li>
+                <li><button onClick={() => handleNavigate('home')} className="hover:text-blue-600 transition-colors">Centro de ajuda</button></li>
+                <li><button onClick={() => handleNavigate('home')} className="hover:text-blue-600 transition-colors">Seja um parceiro</button></li>
+                <li><button onClick={() => handleNavigate('home')} className="hover:text-blue-600 transition-colors">Políticas de cancelamento</button></li>
+                <li><button onClick={() => handleNavigate('contact')} className="hover:text-blue-600 transition-colors">Ouvidoria</button></li>
               </ul>
             </div>
 
